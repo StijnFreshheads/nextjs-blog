@@ -5,7 +5,8 @@ import Date from '../../components/date'
 import utilStyles from '../../styles/utils.module.css'
 
 export async function getStaticPaths() {
-    const paths = getAllPostIds()
+    const paths = await getAllPostIds()
+    console.log("getStaticPaths", paths)
     return {
         paths,
         fallback: false
@@ -30,9 +31,10 @@ export default function Post({ postData }) {
             <article>
                 <h1 className={utilStyles.headingXl}>{postData.title}</h1>
                 <div className={utilStyles.lightText}>
-                    <Date dateString={postData.date} />
+                    {postData.publishDate}
+                    {/*<Date dateString={postData.date} />*/}
                 </div>
-                <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
+                <div>{postData.text}</div>
             </article>
         </Layout>
     )
