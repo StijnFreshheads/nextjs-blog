@@ -1,6 +1,9 @@
+@value variables: "../styles/vars.css";
+@value header-height from variables;
+
 .container {
   max-width: 36rem;
-  padding: 0 1rem;
+  padding: header-height 1rem;
   margin: 3rem auto 6rem;
 }
 

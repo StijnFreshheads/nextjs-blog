@@ -1,9 +1,12 @@
-import Head from 'next/head'
-import Layout, { siteTitle } from '../components/layout'
-import utilStyles from '../styles/utils.module.css'
-import { getPostsData } from '../lib/posts'
-import Link from 'next/link'
-import Date from '../components/date'
+import Head from 'next/head';
+import Layout, { siteTitle } from '../components/layout';
+import utilStyles from '../styles/utils.module.css';
+import { getPostsData } from '../lib/posts';
+import Link from 'next/link';
+import Date from '../components/date';
+
+import { getSession, signIn, signOut, useSession } from 'next-auth/react';
+import Header from '../components/header';
 
 export async function getStaticProps() {
     const posts = await getPostsData();
@@ -16,21 +19,41 @@ export async function getStaticProps() {
 }
 
 export default function Home({ posts }) {
-  return (
-    <Layout home>
-      <Head>
-        <title>{siteTitle}</title>
-      </Head>
-      <section className={utilStyles.headingMd}>
-        <p>Im Stijn</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this in{' '}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
-      <Link href={`/posts/first-post`}>
-          <a>First post test</a>
-      </Link>
-      </section>
+    const { data: session, status } = useSession();
+
+    if (status === 'loading') {
+        return (
+            <>
+                <Header />
+                <Head>
+                    <title>{siteTitle}</title>
+                </Head>
+                <Layout home>
+                    <p>Loading...</p>
+                </Layout>
+            </>
+        );
+    }
+
+    return (
+        <>
+            <Header />
+            <Layout home>
+                <Head>
+                    <title>{siteTitle}</title>
+                </Head>
+
+                <section className={utilStyles.headingMd}>
+                    <p>Im Stijn</p>
+                    <p>
+                        (This is a sample website - you’ll be building a site
+                        like this in{' '}
+                        <a href="https://nextjs.org/learn">
+                            our Next.js tutorial
+                        </a>
+                        .)
+                    </p>
+                </section>
 
     <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Posts</h2>
