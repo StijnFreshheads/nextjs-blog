@@ -13,9 +13,9 @@ export async function getStaticProps() {
 
     return {
         props: {
-            posts: posts.data
-        }
-    }
+            posts: posts.data,
+        },
+    };
 }
 
 export default function Home({ posts }) {
@@ -55,22 +55,25 @@ export default function Home({ posts }) {
                     </p>
                 </section>
 
-    <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
-        <h2 className={utilStyles.headingLg}>Posts</h2>
-        <ul className={utilStyles.list}>
-            {posts.map(({ id, publishDate, text }) => (
-                <li className={utilStyles.listItem} key={id}>
-                    <Link href={`/posts/${id}`}>
-                        <a>{text}</a>
-                    </Link>
-                    <br />
-                    <small className={utilStyles.lightText}>
-                        <Date dateString={publishDate} />
-                    </small>
-                </li>
-            ))}
-        </ul>
-    </section>
-    </Layout>
-  )
+                <section
+                    className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}
+                >
+                    <h2 className={utilStyles.headingLg}>Posts</h2>
+                    <ul className={utilStyles.list}>
+                        {posts.map(({ id, publishDate, text }) => (
+                            <li className={utilStyles.listItem} key={id}>
+                                <Link href={`/posts/${id}`}>
+                                    <a>{text}</a>
+                                </Link>
+                                <br />
+                                <small className={utilStyles.lightText}>
+                                    <Date dateString={publishDate} />
+                                </small>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            </Layout>
+        </>
+    );
 }
